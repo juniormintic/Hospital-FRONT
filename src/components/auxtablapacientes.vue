@@ -1,6 +1,13 @@
 <script>
-    
+    import Formpaciente from './form-paciente.vue';
+    import { ref } from 'vue'
+ 
+    const currentTab = ref('Pacientes')
 
+    const tabs = {
+        Pacientes,
+    
+    };
 </script>
 
 <template>

@@ -1,30 +1,24 @@
 <script setup>
- 
-
-import Pacientes from '../components/AuxListPacientes.vue';
-import Doctores  from '../components/AuxListDoctores.vue';
-import Enfermeras from '../components/AuxListEnfermera.vue';
-import Header from '../components/Header.vue'
-
-
-import { ref } from 'vue'
- 
-
-const currentTab =ref('Pacientes');
-const tabs = {
-    Pacientes,
-    Doctores,
-    Enfermeras
- 
-};
-
-
-
+    import { ref } from 'vue'
+   const props= defineProps({
+        tabs: {
+            type: Object,
+            required: true
+        },
+        
+    });
+    defineEmits(['tabla'])
+    console.log(props.tabs.Pacientes)
+    
+    const currentTab = ref('Pasientes');
+     
+    
+  
+    
 </script>
-
-<template>
-       <!-- <Header :tabs="tabs"/> -->
-       <header>
+    
+    <template>
+    <header>
         <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Falcon</a>
@@ -55,16 +49,13 @@ const tabs = {
         </div>
         </nav>
     </header>
-    <main>
-
-        <!-- carga el componente de tablas segun el click del menu -->
-           <component :lista="res" :is="tabs[currentTab]" class="tab"></component> 
-    </main>
-</template>
-
-<style>
-.option-session{
-    margin-right: 20px;
-}
-
-</style>
+        <!-- <main>
+            carga el componente de tablas segun el click del menu 
+                <component :is="tabs[currentTab]" class="tab"></component>
+            
+            
+        </main>
+     -->
+        
+    
+    </template>

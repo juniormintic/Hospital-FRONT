@@ -33,11 +33,11 @@ const tabs = {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"
+                <li class="nav-item "
                 v-for="(_, tab) in tabs"
                 :key="tab"
                 :class="['tab-button', { active: currentTab === tab }]"
-                @click="currentTab = tab,$emit('tabla', $event.target.value)">
+                @click="currentTab = tab">
                     <a class="nav-link " > {{ tab }}</a>
             </li>
               
@@ -58,13 +58,10 @@ const tabs = {
     <main>
 
         <!-- carga el componente de tablas segun el click del menu -->
-           <component :lista="res" :is="tabs[currentTab]" class="tab"></component> 
+           <component  :is="tabs[currentTab]" class="tab"></component> 
     </main>
 </template>
 
 <style>
-.option-session{
-    margin-right: 20px;
-}
 
 </style>

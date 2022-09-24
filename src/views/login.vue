@@ -1,44 +1,89 @@
-<script setup>
+<script >
 import axios from "axios";
-let user = {
-  usuario: "",
-  password: "",
-};
 
- function processLogInUser() {
-  axios
-    .post("https://falcon35.herokuapp.com/persona/", user, {
-      headers: {},
-    })
-    .then((result) => {
-      let dataLogIn = {
-        username: user.usuario,
-        token_access: result.data.access,
-        token_refresh: result.data.refresh,
-      };
+export default{
+    name:'login',
+    components:{
 
-      this.$emit("completedLogIn", dataLogIn);
-    })
-    .catch((error) => {
-      if (error.response.status == "401")
-        alert("ERROR 401: Credenciales Incorrectas.");
-    });
-  // console.log(user);
-  // await fetch(`https://falcon35.herokuapp.com/persona/`)
-  //   .then((response) => response.json())
-  //   .then((json) => console.log(json));
+    },
+    data(){
+      return{     
+            cedula:'',
+            password:'',
+            error: false,
+            error_msg:'',        
+      }
+    },
+    methods:{
+       login(){           
+         if(this.validarCedula()==true){
+          this.error = false;
+          let json={
+                "usuarioId": this.cedula,
+                "password": this.password
+             
+          };
+          
+          //enviar por post datos para la autenticar
+          axios.post('https://falcon35.herokuapp.com/persona',json,{headers: {}})
+              .then((res)=>{
+                //definir cuando se pueda hacer peticion
+                 if(res.data.status=="200" || "ok"){
+                  let dataLogIn = {
+                      userId: this.cedula,
+                      token_access: res.data.access,
+                      token_refresh: res.data.refresh,
+                      }
+
+                      this.$emit('completedLogIn', dataLogIn)                     
+                    
+                 }else{
+                    this.error = true;
+                    this.error_msg=res.data.result.error_msg
+                }
+                console.log(res)
+              })
+              .catch((error)=>{
+                console.log(error)
+              })
+         }  else{
+          this.error = true;
+          this.error_msg=this.validarCedula();
+         }         
+           
+       },
+       validarCedula(){
+          if(!this.cedula || !this.password) return 'Por favor insertar  cedula y contraseña';
+          if(!/[0-9]/.test(this.cedula)) return `El numero de documento ${this.cedula} no es valido`;
+          if(this.cedula.length >=10)return  `El numero de documento es muy lago`;
+            
+           return true;
+       }
+    }
+
+
 }
+
+
+// let expReg=/[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/i.test(email);
+//  return (expReg)? console.info(`${email} es valido`):console.warn(`${email} NO es valido`)
+
+
 </script>
 <template>
   <section>
-    <form v-on:submit.prevent="processLogInUser">
+    <div class="alert alert-danger " role="alert" v-if="error">
+       {{error_msg }} 
+    </div>
+    <form v-on:submit.prevent="login">
+      
       <h4>Hospital en casa</h4>
       <br />
-      <input type="text" v-model="user.usuario" placeholder="cedula" required />
+      <input type="text" v-model="cedula" placeholder="cedula" required />
       <br />
       <input
         type="password"
-        v-model="user.password"
+        v-model="password"
         placeholder="Contraseña"
         required
       />
@@ -46,6 +91,8 @@ let user = {
     </form>
   </section>
 </template>
+
+
 <style scoped>
 html {
   box-sizing: border-box;
@@ -56,7 +103,12 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
+.alert{
+  position: absolute;
+  top:10px;
+  width: 100%;;
+  text-align: center;
+}
 section {
   background-color: lightgray;
   font-family: sans-serif;
@@ -74,7 +126,7 @@ form {
   margin-left: auto;
   margin-right: auto;
 
-  height: 330px;
+ min-height: 330px;
   width: 300px;
 }
 form > h4 {

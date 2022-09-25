@@ -1,17 +1,26 @@
-<script setup>
-    import { ref } from 'vue'
-   const props= defineProps({
-        tabs: {
-            type: Object,
-            required: true
+<script >
+import { ref } from 'vue';
+
+
+    export default{
+        data(){
+            return{
+                currentTab:ref('Pacientes')
+            }
+        },      
+        props:{ 
+           tabs: null
+
         },
-        
-    });
-    defineEmits(['tabla'])
-    console.log(props.tabs.Pacientes)
-    
-    const currentTab = ref('Pasientes');
-     
+      
+        methods:{
+            enviarData(data){
+             
+                this.$emit('recibir',data)
+            }
+        }
+    }
+
     
   
     
@@ -26,21 +35,21 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"
-                v-for="(_, tab) in tabs"
-                :key="tab"
-                :class="['tab-button', { active: currentTab === tab }]"
-                @click="currentTab = tab,$emit('tabla', $event.target.value)">
-                    <a class="nav-link " > {{ tab }}</a>
-            </li>
-              
-            </ul>
+                <nav class="nav nav-masthead nav-center ">
+                    <a class="nav-link fw-bold py-1 px-0"
+                        v-for="tab in tabs"
+                        :key="tab"
+                        :class="['tab-button', { active: currentTab === tab }]"
+                        @click="currentTab = tab,enviarData(tab)"
+                        >
+                        {{ tab }}
+                    </a>                
+                </nav>
+            
             <div class="d-flex options-session" >
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
-                <li class="nav-item"><a class="nav-link " href="#">Cerrar sesion</a></li>
-             
+                <button class="tab-button">Cerrar sesion</button>             
                 </li>
             </ul>
             </div>
@@ -49,13 +58,31 @@
         </div>
         </nav>
     </header>
-        <!-- <main>
-            carga el componente de tablas segun el click del menu 
-                <component :is="tabs[currentTab]" class="tab"></component>
-            
-            
-        </main>
-     -->
-        
-    
+      
     </template>
+
+    <style scoped>
+        .nav-center{
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .tab-button {
+        padding: 10px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;       
+        cursor: pointer;
+        color: #e0e0e0;
+        background: #0d6efd; 
+        margin-bottom: -1px;
+        margin-right: -1px;
+        }
+        
+        .tab-button.active {
+            border-bottom-color: #fff;
+            color: #fff;
+        }
+        .tab {
+        border: 1px solid #ccc;
+        padding: 10px;
+        }
+    </style>

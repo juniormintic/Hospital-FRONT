@@ -1,27 +1,25 @@
 <script >
-// import axios from 'axios';
-//   export default{
-//     name:'Listapacientes',
-//     data(){
-//         return{
-//             Listapacientes:null,
-//             Pagina:1,          
+import axios from 'axios';
+  export default{
+    name:'Listapacientes',
+    data(){
+        return{
+            Listapacientes:null,
+            Pagina:1,          
            
-//         }
-//     },
-//     components:{
-      
-//     },
-//     mounted:function(){
-//             this.currentTab=shallowRef('Pacientes');
-//             let URL=`https://falcon35.herokuapp.com/persona?page=${this.Pagina}`;
-//             axios.get(URL).then((res)=>{
-//                 this.Listapacientes=res.data;
-//                 console.log(data)
-//             })
-//     }
+        }
+    },
+   
+    mounted:function(){
+        //    // this.currentTab=shallowRef('Pacientes');
+        //     let URL=`https://falcon35.herokuapp.com/persona?page=${this.Pagina}`;
+        //     axios.get(URL).then((res)=>{
+        //         this.Listapacientes=res.data;
+        //         console.log(data)
+        //     })
+    }
 
-// }
+}
  
 </script>
 
@@ -62,11 +60,26 @@
                 <td>{{paciente.telefono}}</td>
                 <td>{{paciente.email}}</td>
             </tr>             -->
-          
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                </tr>
+                <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+                </tr>
+                <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+                </tr>
         </tbody>
     </table>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -220,4 +233,6 @@
 </div>
         
 </div>
+</div>
+
 </template>

@@ -42,8 +42,7 @@
           
         </tbody>
     </table>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -197,4 +196,6 @@
 </div>
         
 </div>
+</div>
+
 </template>

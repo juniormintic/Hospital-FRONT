@@ -12,7 +12,7 @@
       },
       methods:{
         verifyAuth: function() {
-          // this.is_auth = localStorage.getItem("isAuth") || false;
+          //  this.is_auth = localStorage.getItem("isAuth") || false;
           //   if (this.is_auth == false)
           //   this.$router.push({ name: "login" });
           //   else

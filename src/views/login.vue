@@ -19,33 +19,35 @@ export default{
          if(this.validarCedula()==true){
           this.error = false;
           let json={
-                "usuarioId": this.cedula,
+                "identificacion": this.cedula,
                 "password": this.password
              
           };
           
+          axios.post('https://falcon35.herokuapp.com/persona/',json)
+          .then(res=>{console.log(res)}).catch(error=>console.log(error))
           //enviar por post datos para la autenticar
-          axios.post('https://falcon35.herokuapp.com/persona',json,{headers: {}})
-              .then((res)=>{
-                //definir cuando se pueda hacer peticion
-                 if(res.data.status=="200" || "ok"){
-                  let dataLogIn = {
-                      userId: this.cedula,
-                      token_access: res.data.access,
-                      token_refresh: res.data.refresh,
-                      }
+          // axios.post('https://falcon35.herokuapp.com/persona',json,{headers: {}})
+          //     .then((res)=>{
+          //       //definir cuando se pueda hacer peticion
+          //       //  if(res.data.status=="200" || "ok"){
+          //       //   let dataLogIn = {
+          //       //       userId: this.cedula,
+          //       //       token_access: res.data.access,
+          //       //       token_refresh: res.data.refresh,
+          //       //       }
 
-                      this.$emit('completedLogIn', dataLogIn)                     
+          //       //       this.$emit('completedLogIn', dataLogIn)                     
                     
-                 }else{
-                    this.error = true;
-                    this.error_msg=res.data.result.error_msg
-                }
-                console.log(res)
-              })
-              .catch((error)=>{
-                console.log(error)
-              })
+          //       //  }else{
+          //       //     this.error = true;
+          //       //     this.error_msg=res.data.result.error_msg
+          //       // }
+          //       console.log(res)
+          //     })
+          //     .catch((error)=>{
+          //       console.log(error)
+          //     })
          }  else{
           this.error = true;
           this.error_msg=this.validarCedula();

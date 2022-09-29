@@ -2,10 +2,10 @@
    import axios from 'axios';
 import { ref } from 'vue';
   export default{
-    name:'Listapacientes',
+    name:'Listadoctors',
     data(){
         return{
-            ListPaciente:[
+            Listdoctor:[
                 {
                 cedula:'123456789',
                 nombre: 'pedro',
@@ -58,7 +58,7 @@ import { ref } from 'vue';
     },
     methods:{
         datosModal(cedula,modal){
-            let res= this.ListPaciente.find(item=> item.cedula===cedula);
+            let res= this.Listdoctor.find(item=> item.cedula===cedula);
             this.Persona.cedula=res.cedula;
             this.Persona.nombre=res.nombre;
             this.Persona.apellido=res.apellido;
@@ -73,15 +73,15 @@ import { ref } from 'vue';
             
         },
 
-        eliminarPaciente(){
+        eliminardoctor(){
 
         }
     },
     mounted:function(){
-        //    // this.currentTab=shallowRef('Pacientes');
+        //    // this.currentTab=shallowRef('doctors');
         //     let URL=`https://falcon35.herokuapp.com/persona?page=${this.Pagina}`;
         //     axios.get(URL).then((res)=>{
-        //         this.ListPaciente.push(res.data);
+        //         this.Listdoctor.push(res.data);
         //         console.log(data)
         //     })
     }
@@ -116,21 +116,21 @@ import { ref } from 'vue';
             </tr>
         </thead>
         <tbody>
-            <tr v-for="paciente in ListPaciente" :key="paciente.cedula">
-                <th  scope="row">{{paciente.cedula}}</th>
-                <td >{{paciente.nombre}}</td>
-                <td>{{paciente.apellido}}</td>
-                <td>{{paciente.telefono}}</td>               
-                <td>{{paciente.email}}</td>
+            <tr v-for="doctor in Listdoctor" :key="doctor.cedula">
+                <th  scope="row">{{doctor.cedula}}</th>
+                <td >{{doctor.nombre}}</td>
+                <td>{{doctor.apellido}}</td>
+                <td>{{doctor.telefono}}</td>               
+                <td>{{doctor.email}}</td>
                 <td>
-                    <button type="button" @click=" datosModal(paciente.cedula)" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                    <button type="button" @click=" datosModal(doctor.cedula)" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal3">
                     Detalles
                     </button>
                                    
-                    <button type="button" @click=" datosModal(paciente.cedula)" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+                    <button type="button" @click=" datosModal(doctor.cedula)" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal4">
                     Actualizar
                     </button>
-                    <button type="button" @click=" eliminarPaciente(paciente.cedula)" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal5">
+                    <button type="button" @click=" eliminardoctor(doctor.cedula)" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal5">
                     Eliminar
                     </button>
                 </td>
@@ -349,11 +349,11 @@ import { ref } from 'vue';
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Eliminar Paciente</h5>
+        <h5 class="modal-title">Eliminar doctor</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Esta seguro de eliminar el paciente.</p>
+        <p>Esta seguro de eliminar el doctor.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

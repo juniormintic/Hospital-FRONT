@@ -1,5 +1,5 @@
 <script >
- 
+
     import Pacientes from '../components/DoctorListPacientes.vue';
     import Header from '../components/Header.vue'
     
@@ -7,7 +7,8 @@
     export default {
       components: {
         Header,
-            Pacientes,
+        Pacientes,
+      
            
       },
       data() {
@@ -34,8 +35,9 @@
             <Header :tabs="this.tabs" v-on:recibir="item" /> 
          
         <main>
+   
             <!-- carga el componente de tablas segun el click del menu -->
-            <component :is="currentTab" :class="tab"></component>
+        <component :is="currentTab"  :class="tab"></component>
         </main>
     </template>
     

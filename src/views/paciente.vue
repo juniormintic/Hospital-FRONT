@@ -1,4 +1,11 @@
 <template>
+
+    <!-- creare vista de paciente  donde se muestren los datos y los botones para editarlos como elde ver el familiar 
+        con lista de signos vitales y historia  -->
+
+
+
+
     <br>
     <header><h2>Modulo Pacientes (Busqueda, Registros signos vitales y Actualización)</h2></header>    
     <br><br>

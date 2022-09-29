@@ -69,7 +69,7 @@
           
         },
         mounted:function(){
-            //    // this.currentTab=shallowRef('Pacientes');
+            
             //     let URL=`https://falcon35.herokuapp.com/persona?page=${this.Pagina}`;
             //     axios.get(URL).then((res)=>{
             //         this.ListPaciente.push(res.data);

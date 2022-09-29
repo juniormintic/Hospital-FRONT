@@ -47,7 +47,7 @@
    
    <template>
        <Header /> 
-          <h1>historia enfermera</h1>
+          
        <div class="container ">
            <br><br>
                 <button type="button" @click="this.$router.push({name:'enfermera'})" class="btn btn-success">Atras</button>

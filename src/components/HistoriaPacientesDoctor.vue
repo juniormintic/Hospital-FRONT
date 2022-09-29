@@ -33,8 +33,7 @@
       },
       mounted:function(){
           this.pacienteId=this.$route.params.id
-          document.addEventListener('click',e=>{console.log(e.target)})
-          console.log()
+         
         //         let URL=`https://falcon35.herokuapp.com/historia/${this.pacienteId}`;
         //         axios.get(URL).then((res)=>{
                    
@@ -47,7 +46,7 @@
 
 <template>
     <Header /> 
-       <h1>historia doctor</h1>
+      
     <div class="container ">
         <br><br>
              <button type="button" @click="this.$router.push({name:'doctor'})" class="btn btn-success">Atras</button>
@@ -140,15 +139,15 @@
             <label for="floatingTextarea2">Sugerencias:</label>
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
             
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
-        </div>
-    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+            </div>
 
+         </div>
     </div>
-</div>
     
     </div>
 

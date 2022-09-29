@@ -23,31 +23,23 @@ export default{
                 "password": this.password
              
           };
-          
-          axios.post('https://falcon35.herokuapp.com/persona/',json)
-          .then(res=>{console.log(res)}).catch(error=>console.log(error))
-          //enviar por post datos para la autenticar
-          // axios.post('https://falcon35.herokuapp.com/persona',json,{headers: {}})
-          //     .then((res)=>{
-          //       //definir cuando se pueda hacer peticion
-          //       //  if(res.data.status=="200" || "ok"){
-          //       //   let dataLogIn = {
-          //       //       userId: this.cedula,
-          //       //       token_access: res.data.access,
-          //       //       token_refresh: res.data.refresh,
-          //       //       }
+          //traer datos y validar ususrio cedula y password 
+          axios.get('https://falcon35.herokuapp.com/persona/')
+          .then(res=>{console.log(res.status)
+              if(res.status ===200){
+                let lo=  res.data.find(item=>  item.password==this.password && item.identificacion==this.cedula)
+                  console.log(lo)
+                //ver guias de material de apoyo 15 16 par el manejo de login 
+                  localStorage.setItem('cedula',lo.identificacion)
+                  localStorage.setItem('rol',lo.rol)
+              //   localStorage.getItem('isAuth', true)
+              }
 
-          //       //       this.$emit('completedLogIn', dataLogIn)                     
-                    
-          //       //  }else{
-          //       //     this.error = true;
-          //       //     this.error_msg=res.data.result.error_msg
-          //       // }
-          //       console.log(res)
-          //     })
-          //     .catch((error)=>{
-          //       console.log(error)
-          //     })
+          }
+
+          ).catch(error=>console.log(error))
+         
+          
          }  else{
           this.error = true;
           this.error_msg=this.validarCedula();

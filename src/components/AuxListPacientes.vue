@@ -94,7 +94,8 @@ import { ref } from 'vue';
                     <button type="button" @click=" datosModal(paciente.identificacion)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal4">
                     Registrar familiar
                     </button>
-                    <button type="button" @click=" datosModal(paciente.identificacion)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal4">
+                    <!-- verificar el formulario para asignar enfermera y doctor -->
+                    <button type="button" @click=" datosModal(paciente.identificacion)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal7">
                     personal medico
                     </button>
                     <button type="button" @click=" eliminarPaciente(paciente.cedula)" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal5">
@@ -106,7 +107,7 @@ import { ref } from 'vue';
         </tbody>
     </table>
 
-
+<!-- registro -->
     <form v-on:submit.prevent="registrarPaciente" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -317,6 +318,30 @@ import { ref } from 'vue';
 </div>
 
 
+<!-- asignar personal medico y enfermera -->
+<form   class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">asignar personal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Esta seguro de eliminar el paciente.</p>
+        <label for="nombre" class="form-label">cedula</label>
+            <input type="nombre" class="form-control" id="nombre" v-model="Persona.identificacion">
+            <label for="nombre" class="form-label">Nombre </label>
+            <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
+            <label for="apellido" class="form-Apellido">Apellidos</label>
+            <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</form>
 <!-- ELIMINAR -->
 <form v-on:submit.prevent="eliminarPaciente"  class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -341,32 +366,6 @@ import { ref } from 'vue';
     </div>
   </div>
 </form>
-
-<!-- asignar doctor y enfermera -->
-<form v-on:submit.prevent="eliminarPaciente"  class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Personal medico</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p></p>
-        <label for="nombre" class="form-label">cedula</label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.identificacion">
-            <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
-            <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-      </div>
-    </div>
-  </div>
-</form>
-
 </div>
 
 </template>

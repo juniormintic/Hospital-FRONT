@@ -1,4 +1,47 @@
+<script>
+    import Header from '../components/Header.vue';
+    import Perfil from '../components/PacientePerfil.vue';
+   
+
+    export default {
+        components: {
+            Header,
+            Perfil,
+          
+        },
+  data() {
+    return {
+      tab:null,
+      currentTab: 'Perfil',
+      tabs: ['Perfil']
+    }
+  },
+   props:{
+     
+   },
+    methods:{
+    //    item(data){
+    //         this.currentTab=data;
+    //    }
+    }
+  
+}
+</script>
 <template>
+      <Header :tabs="this.tabs" v-on:recibir="item" /> 
+         
+         <main>
+    
+             <!-- carga el componente de tablas segun el click del menu -->
+         <component :is="currentTab"  :class="tab"></component>
+        </main>
+</template>
+
+<style>
+
+</style>
+
+<!-- <template> -->
 
     <!-- creare vista de paciente  donde se muestren los datos y los botones para editarlos como elde ver el familiar 
         con lista de signos vitales y historia  -->
@@ -6,7 +49,7 @@
 
 
 
-    <br>
+    <!-- <br>
     <header><h2>Modulo Pacientes (Busqueda, Registros signos vitales y Actualización)</h2></header>    
     <br><br>
     <div class="modal-header">
@@ -62,7 +105,7 @@
                 <th scope="col">Email</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> -->
                 <!-- <tr v-for="paciente in ListPaciente" :key="cedula">
                     <th scope="row">{{paciente.cedula}}</th>
                     <td>{{paciente.nombre}}</td>
@@ -73,7 +116,7 @@
                     <td>{{paciente.email}}</td>
                 </tr>             -->
               
-            </tbody>
+            <!-- </tbody>
         </table>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
@@ -105,10 +148,11 @@
         </div>
         </div>
     </div>
-</div>
+</div> -->
+
     <!--Update-->
     
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
+    <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -137,9 +181,11 @@
         </div>
     
         </div>
-    </div>
+    </div> -->
+    
     <!--Buscar-->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
+
+    <!-- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
         <div class="modal-dialog">
             <div class="modal-content">
                
@@ -148,4 +194,4 @@
     </div>
             
     </div>
-    </template>
+    </template> -->

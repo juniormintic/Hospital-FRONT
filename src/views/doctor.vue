@@ -190,7 +190,6 @@
     opacity: 10;
     font-style:dark;
     color: #E5E7E9;
-
     }
     .Historio-Clinica{
     margin:0;

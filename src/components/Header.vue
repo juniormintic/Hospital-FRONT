@@ -61,7 +61,8 @@ import { ref } from 'vue';
       
     </template>
 
-    <style scoped>
+    <style >
+      
         .nav-center{
           margin-left: auto;
           margin-right: auto;

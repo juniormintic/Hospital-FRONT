@@ -334,6 +334,16 @@ import { ref } from 'vue';
             <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
             <label for="apellido" class="form-Apellido">Apellidos</label>
             <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
+            <!--Asignar personal-->
+            <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Tipo de personal medico
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Doctor</a></li>
+                <li><a class="dropdown-item" href="#">Enfermera</a></li>
+            </ul>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

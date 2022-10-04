@@ -1,7 +1,6 @@
 <script >
 import axios from 'axios';
 
-import { ref } from 'vue';
   export default{
     name:'Listapacientes',
     data(){
@@ -9,41 +8,97 @@ import { ref } from 'vue';
             header:null,
             ListPaciente:null,
             Pagina:1,      
-            Persona: {
-                cedula:'',
-                nombre:'',
+            paciente:null,
                 apellido:'',
-                telefono:'',
-                email:'',
-                sexo:'',
                 ciudad:'',
+                codigo_rol:1,
                 direccion: '',
+                email:'',
                 fecha_nacimiento:'',
-                parentesco:''
-            }
+                fecha_registro:'',
+                identificacion:'',                
+                nombre:'',
+                password:'',                
+                telefono:'',               
+                sexo: '',
+                tipo_documento:'',  
+                parentesco:'',
+               
+            
 
            
         }
     },
     methods:{
-        datosModal(cedula,modal){
-            this.Persona= this.ListPaciente.find(item=> item.identificacion==cedula);
-                
-            console.log(this.Persona.fecha_nacimiento);
+        datosModal(cedula){
+          this.paciente= this.ListPaciente.find(item=> item.identificacion==cedula);               
             
         },
-        registrarPaciente(){
+        registrar(){
+            this.fecha_registro= ()=>{
+
+                
+            const fecha= new Date();
+               let anio= fecha.getFullYear();
+               let mes = fecha.getMonth()+1;
+               let dia=fecha.getDay();
+               dia= dia.lenght>1? dia:`0${dia}`;
+              return  `${anio}-${mes}-${dia}`;
+            }
+            let persona= {
+                "apellido": this.apellido,
+                "ciudad":this.ciudad,
+                "codigo_rol": this.codigo_rol,
+                "direccion": this.direccion,
+                "email":this.email,
+                "fecha_nacimiento": this.fecha_nacimiento,
+                "fecha_registro": this.fecha_registro() ,
+                "identificacion": this.identificacion,
+                "nombre":this.nombre,
+                "password":this.password,
+                "sexo":this.sexo,
+                "telefono":this.telefono,                
+                "tipo_documento":this.tipo_documento 
+            }
+            let json=JSON.stringify(persona);
+            console.log(json);
+            axios.post("https://falcon35.herokuapp.com/persona/" ,persona)
+            .then(res=>{
+                this.apellido="";
+                this.ciudad="";                
+                this.direccion="";
+                this.email="";
+                this.fecha_nacimiento="";
+                this.fecha_registro="";
+                this.identificacion="";
+                this.nombre="";
+                this.password="";
+                this.sexo="";
+                this.telefono="";
+                this.tipo_documento="";
+                this.updated();
+              // console.log(res)
+            }).catch(error=>console.log(error))
                 
         },
 
-        eliminarPaciente(){
-
+       
+        updated(){
+            axios.get('https://falcon35.herokuapp.com/persona/')
+                .then(res=>{
+                    console.log(res)
+                    this.ListPaciente=res.data.filter(item=>item.codigo_rol===1)
+                }).catch(error=>console.log(error))
         }
+
     },
     mounted:function(){
         
         axios.get('https://falcon35.herokuapp.com/persona/')
-        .then(res=>{this.ListPaciente=res.data; console.log(res.data)}).catch(error=>console.log(error))
+        .then(res=>{
+            console.log(res)
+            this.ListPaciente=res.data.filter(item=>item.codigo_rol===1)
+        }).catch(error=>console.log(error))
         
     }
 
@@ -92,15 +147,13 @@ import { ref } from 'vue';
                     Actualizar
                     </button> 
                     <button type="button" @click=" datosModal(paciente.identificacion)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal4">
-                    Registrar familiar
+                    familiar
                     </button>
                     <!-- verificar el formulario para asignar enfermera y doctor -->
                     <button type="button" @click=" datosModal(paciente.identificacion)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal7">
-                    personal medico
+                     medico y enfermera
                     </button>
-                    <button type="button" @click=" eliminarPaciente(paciente.cedula)" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal5">
-                    Eliminar
-                    </button>
+                 
                 </td>
             </tr>            
           
@@ -108,7 +161,7 @@ import { ref } from 'vue';
     </table>
 
 <!-- registro -->
-    <form v-on:submit.prevent="registrarPaciente" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
+    <form v-on:submit.prevent="registrar()" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style='text-align:left'>
     <div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header">
@@ -116,52 +169,63 @@ import { ref } from 'vue';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <label for="nombre" class="form-label">cedula</label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.identificacion">
+            <label for="cedula" class="form-label">cedula</label>
+            <input type="text" class="form-control" id="cedula" v-model="identificacion">
             <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
-            <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
-            <label for="email" class="form-email">Correo Electronico</label>
-            <input type="email" class="form-control" id="email" v-model="Persona.email">
+            <input type="text" class="form-control" id="nombre" v-model="nombre">
+            <label for="apellido" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellido" v-model="apellido">
+            <label for="email" class="form-label">Correo Electronico</label>
+            <input type="text" class="form-control" id="email" v-model="email">
             
         </div>
         <div class="modal-body">
-                <label for="email" class="form-email">Sexo</label><br>
-                <input class="form-check-input" type="radio" v-model="Persona.sexo" name="flexRadioDefault" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Mujer 
-                </label>
-                <p> </p>
-            
-                <input class="form-check-input" type="radio" v-model="Persona.sexo" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                <label class="form-check-label" for="flexRadioDefault2">
-                       Hombre
-                </label>
+                <label for="sexo" class="form-label">Sexo</label><br>
+                <select class="form-control"  v-model="sexo">
+                <option disabled value="">Please select one</option>
+                <option>M</option>
+                <option>F</option>
+              
+            </select>
                 
             </div>
             
         <div class="modal-body">           
             <label for="Birtday">Fecha de Nacimiento:  </label><br>
-            <input type="date" id="Birtday" v-model="Persona.fecha_nacimiento" pattern="\d{4}-\d{2}-\d{2}" >
+            <input type="date" id="Birtday" v-model="fecha_nacimiento" pattern="\d{4}-\d{2}-\d{2}" >
         </div>
         <div class="modal-body" >   
-            <label for="telefono" class="form-telefono">Telefono</label>
-            <input type="telefono" class="form-control" id="Telefono" v-model="Persona.telefono" placeholder="Digite su numero telefonico">
+            <label for="telefono" class="form-label">Telefono</label>
+            <input type="telefono" class="form-control" id="Telefono" v-model="telefono" placeholder="Digite su numero telefonico">
         </div>
         <div class="modal-body"> 
-            <label for="ciudad" class="form-Ciudad">Ciudad</label><br>
-            <input type="text" class="form-control" id="ciudad" v-model="Persona.ciudad" placeholder="Ciudad">   
+            <label for="ciudad" class="form-label">Ciudad</label><br>
+            <input type="text" class="form-control" id="ciudad" v-model="ciudad" placeholder="Ciudad">   
             
     
         </div>
         <div class="modal-body" >   
-            <label for="direccion" class="form-direccion">Dirección de residencia</label>
-            <input type="direccion" class="form-control" id="Telefono" v-model="Persona.direccion" placeholder="Digite su dirección">
+            <label for="direccion" class="form-label">Dirección de residencia</label>
+            <input type="text" class="form-control" id="direccion" v-model="direccion" placeholder="Digite su dirección">
+        </div>
+       
+        <div class="modal-body" >   
+            <label for="tipodocumento" class="form-label">Tipo documento</label>
+            <select class="form-control" id="tipodocumento" v-model="tipo_documento">
+                <option disabled value="">Please select one</option>
+                <option>CC</option>
+                <option>TI</option>
+              
+            </select>
+           
+        </div>
+        <div class="modal-body" >   
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" v-model="password" placeholder="Digite su dirección">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
     </div>
 
@@ -177,23 +241,23 @@ import { ref } from 'vue';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" name="nombre" :value="Persona.nombre">
-            <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" name="apellido" :value="Persona.apellido">
-            <label for="email" class="form-email">Correo Electronico</label>
-            <input type="email" class="form-control" id="email" name="email" :value="Persona.email">
+            <label for="nombre2" class="form-label">Nombre </label>
+            <input type="text" class="form-control" id="nombre2" name="nombre" :value="this.nombre">
+            <label for="apellido2" class="form-Apellido">Apellidos</label>
+            <input type="apellido" class="form-control" id="apellido2" name="apellido" :value="this.apellido">
+            <label for="email2" class="form-label">Correo Electronico</label>
+            <input type="email" class="form-control" id="email2" name="email" :value="this.email">
             
         </div>
         <div class="modal-body">
-                <label for="email" class="form-email">Sexo</label><br>
-                <input class="form-check-input" type="radio" name="sexo" :value="Persona.sexo" id="flexRadioDefault1">
+                <label for="sexo2" class="form-label">Sexo</label><br>
+                <input class="form-check-input" type="radio" name="sexo" :value="this.sexo" id="flexRadioDefault1">
                 <label class="form-check-label" for="sexo">
                     Mujer 
                 </label>
                 <p> </p>
             
-                <input class="form-check-input" type="radio" name="sexo" :value="Persona.sexo" id="flexRadioDefault2" checked>
+                <input class="form-check-input" type="radio" name="sexo" :value="this.sexo" id="flexRadioDefault2" checked>
                 <label class="form-check-label" for="sexo">
                        Hombre
                 </label>
@@ -201,25 +265,25 @@ import { ref } from 'vue';
             </div>
             
         <div class="modal-body">           
-            <label for="Birtday">Fecha de Nacimiento:  </label><br>
-            <input type="date" id="Birtday" name="fecha" :value="Persona.fecha_nacimiento" pattern="\d{4}-\d{2}-\d{2}">
+            <label for="Birtday2">Fecha de Nacimiento:  </label><br>
+            <input type="date" id="Birtday2" name="fecha" :value="this.fecha_nacimiento" pattern="\d{4}-\d{2}-\d{2}">
         </div>
         <div class="modal-body" >   
-            <label for="telefono" class="form-telefono">Telefono</label>
-            <input type="telefono" class="form-control" id="Telefono" name="telefono" :value="Persona.telefono">
+            <label for="telefono2" class="form-label">Telefono</label>
+            <input type="telefono" class="form-control" id="Telefono2" name="telefono" :value="this.telefono">
         </div>
         <div class="modal-body"> 
-            <label for="telefono" class="form-Ciudad">Ciudad</label><br>
-            <input type="text" class="form-control" id="ciudad" name="ciudad" :value="Persona.ciudad">  
+            <label for="ciudad2" class="form-label">Ciudad</label><br>
+            <input type="text" class="form-control" id="ciudad2" name="ciudad" :value="this.ciudad">  
     
         </div>
         <div class="modal-body" >   
-            <label for="direccion" class="form-direccion">Dirección de residencia</label>
-            <input type="direccion" class="form-control" id="Telefono" name="direccion" :value="Persona.direccion">
+            <label for="direccion2" class="form-direccion">Dirección de residencia</label>
+            <input type="text" class="form-control" id="direccion2" name="direccion" :value="this.direccion">
         </div>
         <div class="modal-body" >   
-            <label for="direccion" class="form-direccion">Parentesco</label>
-            <input type="direccion" class="form-control" id="Telefono" name="direccion" :value="Persona.parentesco">
+            <label for="parentesco2" class="form-direccion">Parentesco</label>
+            <input type="text" class="form-control" id="parentesco2" name="direccion" :value="this.parentesco">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
@@ -238,11 +302,11 @@ import { ref } from 'vue';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Buscar"></button>
         </div>
         <div class="modal-body">
-            <label for="nombre" class="form-label">Numero de Identificación </label>
-            <input type="nombre" class="form-control" id="nombre" placeholder="Número de Identificación">
+            <label for="nombre4" class="form-label">Numero de Identificación </label>
+            <input type="text" class="form-control" id="nombre4" placeholder="Número de Identificación">
             <div class="modal-footer">
                 <div class="modal-body">
-                <label for="email" class="form-email">Tipo de Documento</label><br>
+                <label for="tipodocumento" class="form-label">Tipo de Documento</label><br>
                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                 <label class="form-check-label" for="flexRadioDefault1">
                     C.C 
@@ -278,35 +342,35 @@ import { ref } from 'vue';
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" name="nombre" :value="Persona.nombre" disabled>
+            <label for="nombre5" class="form-label">Nombre </label>
+            <input type="text" class="form-control" id="nombre5" name="nombre" :value="this.nombre" disabled>
             <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" name="apellido" :value="Persona.apellido" disabled>
-            <label for="email" class="form-email">Correo Electronico</label>
-            <input type="email" class="form-control" id="email" :name="Persona.email" :value="Persona.email" disabled>
+            <input type="apellido" class="form-control" id="apellido" name="apellido" :value="this.apellido" disabled>
+            <label for="email3" class="form-email">Correo Electronico</label>
+            <input type="email" class="form-control" id="email3" :name="this.email" :value="this.email" disabled>
             
         </div>
         <div class="modal-body">
                 <label for="sexo" class="form-sexo">Sexo</label><br>
-                <input type="text" class="form-control" id="sexo" name="sexo" :value="Persona.sexo" disabled>
+                <input type="text" class="form-control" id="sexo" name="sexo" :value="this.sexo" disabled>
             </div>
             
         <div class="modal-body">           
-            <label for="Birtday">Fecha de Nacimiento:  </label><br>
-            <input type="text" id="Birtday" name="fecha_nacimiento" :value="Persona.fecha_nacimiento" disabled>
+            <label for="Birtday3">Fecha de Nacimiento:  </label><br>
+            <input type="text" id="Birtday3" name="fecha_nacimiento" :value="this.fecha_nacimiento" disabled>
         </div>
         <div class="modal-body" >   
             <label for="telefono" class="form-telefono">Telefono</label>
-            <input type="telefono" class="form-control" id="Telefono" name="telefono" :value="Persona.telefono" disabled>
+            <input type="telefono" class="form-control" id="Telefono" name="telefono" :value="this.telefono" disabled>
         </div>
         <div class="modal-body"> 
-            <label for="telefono" class="form-Ciudad">Ciudad</label><br>
-            <input type="text" class="form-control" id="ciudad" name="ciudad" :value="Persona.ciudad" disabled>  
+            <label for="ciudad3" class="form-label">Ciudad</label><br>
+            <input type="text" class="form-control" id="ciudad3" name="ciudad" :value="this.ciudad" disabled>  
     
         </div>
         <div class="modal-body" >   
             <label for="direccion" class="form-direccion">Dirección de residencia</label>
-            <input type="direccion" class="form-control" id="Telefono" name="direccion" :value="Persona.direccion" disabled>
+            <input type="direccion" class="form-control" id="Telefono" name="direccion" :value="this.direccion" disabled>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
@@ -318,54 +382,8 @@ import { ref } from 'vue';
 </div>
 
 
-<!-- asignar personal medico y enfermera -->
-<form   class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">asignar personal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Esta seguro de eliminar el paciente.</p>
-        <label for="nombre" class="form-label">cedula</label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.identificacion">
-            <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
-            <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-      </div>
-    </div>
-  </div>
-</form>
-<!-- ELIMINAR -->
-<form v-on:submit.prevent="eliminarPaciente"  class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Eliminar Paciente</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Esta seguro de eliminar el paciente.</p>
-        <label for="nombre" class="form-label">cedula</label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.identificacion">
-            <label for="nombre" class="form-label">Nombre </label>
-            <input type="nombre" class="form-control" id="nombre" v-model="Persona.nombre">
-            <label for="apellido" class="form-Apellido">Apellidos</label>
-            <input type="apellido" class="form-control" id="apellido" v-model="Persona.apellido">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Eliminar</button>
-      </div>
-    </div>
-  </div>
-</form>
+
+
 </div>
 
 </template>

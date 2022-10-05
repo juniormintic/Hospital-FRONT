@@ -51,6 +51,7 @@
      
     </script>
 <template>
+    <!-- PERFIL-->
     <div class="container">
         <br>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -84,8 +85,10 @@
 	</div>
 </div>
 </div>
+<!--TABLAS-->
 
-
+    
+   
 </template>
 <style>
     @import url(http://fonts.googleapis.com/css?family=Lato:400,700);

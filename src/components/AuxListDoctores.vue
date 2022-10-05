@@ -21,7 +21,9 @@
                 telefono:'',               
                 sexo: '',
                 tipo_documento:'',  
-                parentesco:'',
+                // anio_contrato:'',
+                // especialidad:'',
+                // area:''
 
            
         }
@@ -55,7 +57,10 @@
                 "password":this.password,
                 "sexo":this.sexo,
                 "telefono":this.telefono,                
-                "tipo_documento":this.tipo_documento 
+                "tipo_documento":this.tipo_documento,
+                // "anio_contrato":this.anio_contrato,
+                // "especialidad":this.especialidad,
+                // "area":this.area 
             }
             let json=JSON.stringify(persona);
             console.log(json);
@@ -73,6 +78,9 @@
                 this.sexo="";
                 this.telefono="";
                 this.tipo_documento="";
+                // this.anio_contrato="",
+                // this.especialidad="",
+                // this.area="", 
                 this.updated();
               // console.log(res)
             }).catch(error=>console.log(error))
@@ -159,6 +167,16 @@
             <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body" >   
+            <label for="tipodocumento" class="form-label">Tipo documento</label>
+            <select class="form-control" id="tipodocumento" v-model="tipo_documento">
+                <option disabled value="">Please select one</option>
+                <option>CC</option>
+                <option>TI</option>
+              
+            </select>
+           
+        </div>
         <div class="modal-body">
             <label for="cedula" class="form-label">cedula</label>
             <input type="text" class="form-control" id="cedula" v-model="identificacion">
@@ -200,16 +218,7 @@
             <input type="text" class="form-control" id="direccion" v-model="direccion" placeholder="Digite su dirección">
         </div>
        
-        <div class="modal-body" >   
-            <label for="tipodocumento" class="form-label">Tipo documento</label>
-            <select class="form-control" id="tipodocumento" v-model="tipo_documento">
-                <option disabled value="">Please select one</option>
-                <option>CC</option>
-                <option>TI</option>
-              
-            </select>
-           
-        </div>
+       
         <div class="modal-body" >   
             <label for="password" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="password" v-model="password" placeholder="Digite su dirección">
